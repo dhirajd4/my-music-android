@@ -4,11 +4,7 @@ class BIT
 	vector<T> tree;
 	int sz;
 	T def;
-	std::function<T(T,T)> functor;
-	void buildTree()
-	{
-		for(int i=1;i<=sz;i++)
-		{
+	std::function<T(T,T)> functo
 			int parent = i + (i&(-i));
 			if(parent<=sz)
 				tree[parent-1] = functor(tree[i-1],tree[parent-1]);
@@ -20,6 +16,10 @@ public:
 	{
 		buildTree();
 	}
+	r;
+	void buildTree()
+	{\;i<=sz;i++)
+		{
 	BIT(int sz,T def,std::function<T(T,T)> functor)
 		: tree(sz,def), sz(sz), functor(functor), def(def)
 	{
