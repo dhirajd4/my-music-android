@@ -1,0 +1,40 @@
+template <typename T>
+class BIT
+{
+	vector<T> tree;
+	int sz;
+	T def;
+	std::function<T(T,T)> functor;
+	void buildTree()
+	{
+		for(int i=1;i<=sz;i++)
+		{
+			int parent = i + (i&(-i));
+			if(parent<=sz)
+				tree[parent-1] = functor(tree[i-1],tree[parent-1]);
+		}
+	}
+public:
+	BIT(vector<T> array,int sz,T def,std::function<T(T,T)> functor)
+		: tree(array.begin(),array.end()), sz(sz), functor(functor), def(def)
+	{
+		buildTree();
+	}
+	BIT(int sz,T def,std::function<T(T,T)> functor)
+		: tree(sz,def), sz(sz), functor(functor), def(def)
+	{
+	}
+	T query(int ind)
+	{
+		T result = def;
+		for(; ind>0; ind-=ind&-ind)
+		{
+			result = functor(result,tree[ind-1]);
+		}
+		return result; 
+	}
+	void update(int ind,T val)
+	{
+		for(;ind<=sz;ind+=ind&-ind)
+			tree[ind-1] = functor(tree[ind-1],val);
+	}
